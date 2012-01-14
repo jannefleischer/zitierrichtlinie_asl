@@ -483,9 +483,13 @@
 <!-- Ende Erstellung Bibliographie -->
 <!-- Macros die sowohl von in-Text-Zitaten als auch von der Bibliographie verwendet werden -->
 	<macro name="sort-key"><!-- Literaturverzeichnis wird sortiert nach 1. Erstem Autor, 2. Jahr der Veröffentlichung, 3.Titel der Veröffentlichung-->
+		<text macro="type-sort" suffix=" "/>
 		<text macro="contributors-sort" suffix=" "/>
 		<text variable="title" suffix=" "/>
 		<text variable="genre"/>
+	</macro>
+	<macro name="type-sort">
+		<text variable="type" suffix=" "/>
 	</macro>
 	<macro name="contributors-sort">
 		<names variable="author">

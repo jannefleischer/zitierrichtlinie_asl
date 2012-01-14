@@ -2,8 +2,8 @@
 <?oxygen RNGSchema="http://xbiblio.svn.sourceforge.net/viewvc/*checkout*/xbiblio/csl/schema/trunk/csl.rnc" type="compact"?>
 <style class="in-text" xml:lang="en" xmlns="http://purl.org/net/xbiblio/csl">
 	<info>
-		<title>Zitierrichtlinie asl Version 0.5</title>
-		<id>http://cms.uni-kassel.de/asl/zitierrichtlinie0.5</id>
+		<title>Zitierrichtlinie asl Version 0.6</title>
+		<id>http://cms.uni-kassel.de/asl/zitierrichtlinie0.6</id>
 		<comment>
 			Basiert auf der "International Organization" csl-Vorlage aus dem Zotero Style Repositry
 		</comment>
@@ -29,10 +29,10 @@
 		<contributor>
 			<name>Janne Fleischer</name>
 		</contributor>
-		<summary>Zitierrichtlinie des Fachbereich 06 asl an der Universität Kassel</summary>
+		<summary>Zitierrichtlinie des Fachbereich 06 asl an der Universität Kassel (Umsetzung von Janne Fleischer)</summary>
 		<category term="engeneering"/>
 		<category term="in-text"/>
-		<updated>2011-05-26T08:25:00+01:00</updated>
+		<updated>2011-09-17T15:20:00+01:00</updated>
 		<rights>This work is licensed under a Creative Commons Attribution-Share Alike 3.0 License: http://creativecommons.org/licenses/by-sa/3.0/</rights>
 	</info>
 <!-- Ausgabe der Zitierung im Text -->
@@ -43,7 +43,7 @@
 		<option name="et-al-subsequent-use-first" value="1"/><!-- Sind es mehr Autoren wird nur der erste angegeben, dann folgt et al. -->
 		<option name="disambiguate-add-names" value="true"/><!-- disambiguate=klarstellen - wenn es mehrere (nach oben angegebenen Regeln) gleichlautende Quellen gibt werden alle Namen gelistet -->
 		<option name="disambiguate-add-year-suffix" value="true"/><!-- Zusätzlich wird ein Jahr hinzugefügt -->
-		<layout prefix="[" suffix="]" delimiter="; "><!-- Zitate im Text werden von Eckigen Klammern umgeben und bei mehrfachen Zitaten durch ein Semikolon getrennt -->
+		<layout prefix="(" suffix=")" delimiter="; "><!-- Zitate im Text werden von Runden Klammern umgeben und bei mehrfachen Zitaten durch ein Semikolon getrennt -->
 			<choose>
 				<if position="ibid-with-locator">
 					<group delimiter=", ">
@@ -55,27 +55,49 @@
 					<text term="ibid" text-case="capitalize-first" suffix="."/>
 				</else-if>
 				<else>
-					<group delimiter="">
-						<text macro="contributors-short"/>
-						<date variable="issued" prefix=" ">
-							<date-part name="year"/>
-						</date>
-						<text macro="point-locators-subsequent"/>
-					</group>
+					<!--<choose>
+						<if type="webpage post-weblog post" match="any">
+							<text macro="contributors-short" suffix=": "/>
+							<text macro="title" />
+						</if>
+						<else>-->
+							<text macro="contributors-short"/>
+							<text macro="issued_cite"/>
+							<!--<if variable="issued" match="any">
+								<date variable="issued" prefix=" ">
+									<date-part name="year"/>
+								</date>
+							</if>
+							<else>
+							</else>
+						</else>
+					</choose>-->
+					<text macro="point-locators-subsequent"/>
 				</else>
 			</choose>
 		</layout>
 	</citation>
 	<macro name="contributors-short">
-		<names variable="author">
-			<name form="short" delimiter="/"/><!-- Nachname wird ausgegeben. Bei Zwei Autoren mit dazwischenliegendem Schrägstrich -->
-			<substitute>
-				<names variable="editor"/><!-- Ist kein Autor angegeben wird der Herausgeber angegeben -->
-				<names variable="publisher"/><!-- Als Alternative wird der Verlag wird angegeben -->
-			</substitute>
-		</names>
+		<choose>
+			<if variable="author editor publisher" match="any">
+				<names variable="author">
+					<name form="short" delimiter="/"/><!-- Nachname wird ausgegeben. Bei Zwei Autoren mit dazwischenliegendem Schrägstrich -->
+					<substitute>
+						<names variable="editor"><!-- Ist kein Autor angegeben wird der Herausgeber angegeben -->
+							<name form="short" delimiter="/"/>
+						</names>
+						<names variable="publisher"><!-- Als Alternative wird der Verlag angegeben -->
+							<name form="short" delimiter="/"/>
+						</names>
+					</substitute>
+				</names>
+			</if>
+			<else>
+				<text macro="anon"/>
+			</else>
+		</choose>
 	</macro>
-	<macro name="point-locators-subsequent">
+	<macro name="point-locators-subsequent"><!--  -->
 		<group>
 			<choose>
 				<if locator="page" match="none"><!-- Wenn keine Seitenzahlen angegeben ist -->
@@ -92,10 +114,16 @@
 				<else-if type="book"><!-- Wenn es ein Buch ist -->
 					<number variable="volume" form="numeric" prefix="Band "/><!-- und Teil einer Reihe wird die Bandnummer ausgegeben -->
 				</else-if>
+				<else>
+					
+				</else>
 			</choose>
 			<text prefix=":" variable="locator"/><!-- Seitenzahl wird ausggeben (oder was immer in der Quellenangabe "locator" angegeben ist (kann auch Absatz oder Zeile enthalten) -->
 		</group>
 	</macro>
+	<macro name="anon">
+    	<text term="anonymous" form="long" text-case="capitalize-first"/>
+    </macro>
 <!-- Ende der Zitierung im Text -->
 <!-- Ausgabe der Bibliographie -->
 	<bibliography>
@@ -148,14 +176,32 @@
 	<macro name="publisher">
 		<text variable="publisher-place"/><!-- Ort der Veröffentlichung -->
 	</macro>
+	<macro name="issued_cite">
+		<choose>
+			<if variable="issued">
+				<date variable="issued">
+					<date-part name="year" prefix=" "/><!-- Wenn ein Veröffentlichungszeitpunkt bekannt ist wird das Jahr in Klammern angegeben. -->
+					<text variable="year-suffix" font-style="italic"/>
+				</date>
+			</if>
+			<else>
+				<text variable="year-suffix" font-style="italic" prefix=" " suffix=" "/>
+				<text term="no date" prefix="(" suffix=")"/><!-- Ist kein Jahr bekannt wird "(ohne Jahr)" ausgegeben (sofern zotero deutsch spricht) -->
+				
+			</else>
+		</choose>
+	</macro>
 	<macro name="issued">
 		<choose>
 			<if variable="issued">
 				<date variable="issued">
-					<date-part name="year" prefix="(" suffix=")"/><!-- Wenn ein Veröffentlichungszeitpunkt bekannt ist wird das Jahr in Klammern angegeben. -->
+					<date-part name="year" prefix="("/><!-- Wenn ein Veröffentlichungszeitpunkt bekannt ist wird das Jahr in Klammern angegeben. -->
+					<text variable="year-suffix" font-style="italic"/>
+					<text value=")"/>
 				</date>
 			</if>
 			<else>
+				<text variable="year-suffix" font-style="italic" prefix=" " suffix=" "/>
 				<text term="no date" prefix="(" suffix=")"/><!-- Ist kein Jahr bekannt wird "(ohne Jahr)" ausgegeben (sofern zotero deutsch spricht) -->
 			</else>
 		</choose>
@@ -394,7 +440,7 @@
 		<text variable="URL" suffix=""/><!-- Gibt die URL aus -->
 		<group prefix=". [Letzter Zugriff: " suffix="] "><!-- Klammern drum -->
 			<choose>
-				<if variable="access" value="any">
+				<if variable="accessed" value="any">
 					<date variable="accessed"><!-- Zugriffsdatum -->
 						<date-part name="day" form="numeric" suffix="."/>
 						<date-part name="month" form="numeric-leading-zeros" suffix="."/>

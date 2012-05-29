@@ -2,8 +2,8 @@
 <?oxygen RNGSchema="http://xbiblio.svn.sourceforge.net/viewvc/*checkout*/xbiblio/csl/schema/trunk/csl.rnc" type="compact"?>
 <style class="in-text" xml:lang="en" xmlns="http://purl.org/net/xbiblio/csl">
 	<info>
-		<title>Zitierrichtlinie asl Version 0.6</title>
-		<id>http://cms.uni-kassel.de/asl/zitierrichtlinie0.6</id>
+		<title>Zitierrichtlinie asl Version 0.6 - sortbytype</title>
+		<id>http://www.assembla.com/spaces/zitierrichtlinie-asl/</id>
 		<comment>
 			Basiert auf der "International Organization" csl-Vorlage aus dem Zotero Style Repositry
 		</comment>
@@ -28,6 +28,7 @@
 		</contributor>
 		<contributor>
 			<name>Janne Fleischer</name>
+			<email>bas_der_gruene@web.de</email>
 		</contributor>
 		<summary>Zitierrichtlinie des Fachbereich 06 asl an der Universität Kassel (Umsetzung von Janne Fleischer)</summary>
 		<category term="engeneering"/>
@@ -37,7 +38,7 @@
 	</info>
 <!-- Ausgabe der Zitierung im Text -->
 	<citation>
-		<option name="et-al-min" value="3"/><!-- Mehr als zwei Autoren: et al. wird verwendet -->
+		<option name="et-al-min" value="6"/><!-- Mehr als zwei Autoren: et al. wird verwendet -->
 		<option name="et-al-use-first" value="1"/><!-- Nur der erste Autor wird dabei angegeben -->
 		<option name="et-al-subsequent-min" value="4"/><!-- Für Sammelbände: 4 Herausgeber werden angegeben (wird nur im Literaturverzeichnis angegeben) -->
 		<option name="et-al-subsequent-use-first" value="1"/><!-- Sind es mehr Autoren wird nur der erste angegeben, dann folgt et al. -->
@@ -131,9 +132,12 @@
 		<option name="et-al-min" value="11"/><!-- Mehr als 11 Autoren: et al wird verwendet -->
 		<option name="et-al-use-first" value="7"/><!-- bei mehr als 11 Autoren werden die ersten 7 angegeben -->
 		<option name="entry-spacing" value="0"/><!-- Zwischen den Quellen wird keine Leerzeile eingefügt -->
+		<text macro="bibliographybytype"/>
+	</bibliography>
+	<macro name="bibliographybytype">
 		<sort>
 			<key macro="sort-key"/><!-- makro gibt eine Liste der Sortierreihenfolge zurück -->
-			<key variable="issued"/><!-- wenn die LIste aus dem Makro nicht ausreicht wird nach Veröffentlichungsjahr sotiert -->
+			<key variable="issued"/><!-- wenn die Liste aus dem Makro nicht ausreicht wird nach Veröffentlichungsjahr sotiert -->
 		</sort>
 		<layout suffix="">
 			<group delimiter=" ">
@@ -157,7 +161,7 @@
 			<text macro="pages-article" />
 			<text macro="access"/>
 		</layout>
-	</bibliography>
+	</macro>
 	<macro name="contributors">
 		<names variable="author" font-weight="bold">
 			<name name-as-sort-order="all" and="symbol" sort-separator=", " delimiter="; " delimiter-precedes-last="always"/><!-- Sortiert nach dem ersten Autoren, das und wird als Symbol gesetzt, Zwischen nach- und Vorname wird ein Komma gesetzt und immer wird der Nachname vor den Vornamen gesetzt -->
@@ -483,13 +487,13 @@
 <!-- Ende Erstellung Bibliographie -->
 <!-- Macros die sowohl von in-Text-Zitaten als auch von der Bibliographie verwendet werden -->
 	<macro name="sort-key"><!-- Literaturverzeichnis wird sortiert nach 1. Erstem Autor, 2. Jahr der Veröffentlichung, 3.Titel der Veröffentlichung-->
-		<text macro="type-sort" suffix=" "/>
+		<text macro="type-sort" prefix="####" suffix="####"/>
 		<text macro="contributors-sort" suffix=" "/>
 		<text variable="title" suffix=" "/>
 		<text variable="genre"/>
 	</macro>
 	<macro name="type-sort">
-		<text variable="type" suffix=" "/>
+		<text variable="type" text-case="capitalize-first" suffix=" "/>
 	</macro>
 	<macro name="contributors-sort">
 		<names variable="author">

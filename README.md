@@ -12,9 +12,14 @@ Die Datei asl_zitierrichtlinie.csl ist ursprünglich für meiner Diplomarbeit bi
 
 Mit der Veröffentlichung auf Github wurde die Lizenz von Creative Commons auf eine MIT geändert. 
 
-Seit Version 0.7 sollte die Version CSL-1.0-kompatibel sein. Die Version 0.7.1
+Seit Version 0.7 sollte die Version CSL-1.0-kompatibel sein.
+
+> https://www.uni-kassel.de/fb06/uploads/media/FB06_2005_Leitfaden_wissenschaftliches_Arbeiten.pdf
 
 ## Changelog
+
+### Version 0.8
+* adjustments for better matching the "Leitfaden"
 
 ### Version 0.7.1
 * changed hoster

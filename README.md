@@ -18,6 +18,7 @@ Seit Version 0.7 sollte die Version CSL-1.0-kompatibel sein. Die Version 0.7.1
 
 ### Version 0.7.1
 * changed hoster
+* reorganized code
 
 ### Version 0.7
 * made compatible to csl-1.0

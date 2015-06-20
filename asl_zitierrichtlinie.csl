@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="de-DE" demote-non-dropping-particle="sort-only">
 	<info>
-		<title>Zitierrichtlinie asl Version 0.8</title>
+		<title>Zitierrichtlinie asl Version 0.8.1</title>
 		<id>https://github.com/jannefleischer/zitierrichtlinie_asl</id>
 	    <link href="https://github.com/jannefleischer/zitierrichtlinie_asl" rel="self"/>
 		<author>
@@ -148,13 +148,20 @@
 		</layout>
 	</bibliography>
 	<macro name="contributors">
-		<names variable="author" font-weight="bold">
-			<name name-as-sort-order="all" and="symbol" sort-separator=", " delimiter=" / " delimiter-precedes-last="always"/><!-- Sortiert nach dem ersten Autoren, das und wird als Symbol gesetzt, Zwischen nach- und Vorname wird ein Komma gesetzt und immer wird der Nachname vor den Vornamen gesetzt -->
-			<substitute>
-				<text macro="editor"/><!-- Ist kein Autor vorhanden wird der Herausgeber angegeben -->
-				<text macro="publisher"/><!-- Ist der auch nicht bekannt wird der Verlag genannt -->
-			</substitute>
-		</names>
+		<choose>
+			<if variable="author editor publisher" match="any">
+				<names variable="author" font-weight="bold">
+					<name name-as-sort-order="all" and="symbol" sort-separator=", " delimiter=" / " delimiter-precedes-last="always"/><!-- Nachname wird ausgegeben. Bei Zwei Autoren mit dazwischenliegendem Schrägstrich -->
+					<substitute>
+						<text macro="editor"/>
+						<text macro="publisher"/>
+					</substitute>
+				</names>
+			</if>
+			<else>
+				<text macro="anon"/>
+			</else>
+		</choose>
 	</macro>
 	<macro name="editor">
 		<names variable="editor">
@@ -200,20 +207,20 @@
 				</choose>
 			</if>
 			<else-if match="any" type="book manuscript interview legislation report">
-				<text variable="title" prefix="" suffix=", "/><!-- Ist es eins der Dinge oben wird der Titel des Buches ausgegeben und es folgt ein Komma -->
+				<text variable="title" prefix="" suffix=". "/><!-- Ist es eins der Dinge oben wird der Titel des Buches ausgegeben und es folgt ein Punk -->
 				<!--<text variable="version" prefix="" suffix=", "/>
 				<text variable="publisher-place" prefix="" suffix=", "/>
 				<text variable="publisher" prefix="" suffix=". "/>-->
 			</else-if>
 			<else-if match="any" type="webpage post-weblog post broadcast">
-				<text variable="title" prefix="" suffix=", "/><!-- Ist es ein Buch wird der Titel des Buches in Kursiv ausgegeben und es folgt ein Semikolon -->
+				<text variable="title" prefix="" suffix=". "/><!-- Ist es ein Buch wird der Titel des Buches in Kursiv ausgegeben und es folgt ein Semikolon -->
 				<!--syssys-->
 			</else-if>
 			<else>
-				<text variable="title" prefix='' suffix=""/><!-- Alle anderen Titel werden in Anführungszeichen ausgegeben -->
+				<text variable="title" prefix="" suffix=". "/><!-- Alle anderen Titel werden in Anführungszeichen ausgegeben -->
 				<choose>
 					<if variable="container-title">
-						<text term="in" text-case="capitalize-first" prefix=". " suffix=":"/>
+						<text term="in" text-case="capitalize-first" prefix="" suffix=":"/>
 					</if>
 				</choose>
 			</else>
@@ -540,16 +547,17 @@
 	<macro name="access">
 		<group delimiter="">
 			<choose>
-				<if type="graphic report webpage" match="any"><!-- Wenn es eine Grafik oder ein report ist -->
+				<if type="graphic report webpage post-weblog motion_picture broadcast " match="any"><!-- Wenn es eine Grafik oder ein report ist -->
+					<text variable="URL" suffix=""/>
 					<text macro="archive"/>
-					<text macro="url_ausgabe" prefix="; Von: " suffix=")"/>
+					<text macro="url_ausgabe" prefix=" " suffix=")"/>
 				</if>
 				<else-if type="book thesis chapter article-journal article-newspaper article-magazine" match="none"><!-- Wenn es nichts gedrucktes ist -->
 					<text macro="archive"/>
-					<text macro="url_ausgabe" prefix=" (von URL entnommen: " suffix=")" />
+					<text macro="url_ausgabe" prefix=" (" suffix=")" />
 				</else-if>
 				<else>
-					<!--<text macro="url_ausgabe" prefix=" (von URL entnommen: " suffix=")" />-->
+					<text macro="url_ausgabe" prefix=" (von URL entnommen: " suffix=")" />
 				</else>
 			</choose>
 		</group>
@@ -558,20 +566,49 @@
 		<text variable="URL" suffix=""/><!-- Gibt die URL aus -->
 		<group prefix=". [Letzter Zugriff: " suffix="] "><!-- Klammern drum -->
 			<choose>
-				<if variable="accessed">
+				<if match="any" variable="accessed container">
 					<date variable="accessed"><!-- Zugriffsdatum -->
 						<date-part name="day" form="numeric" suffix="."/>
 						<date-part name="month" form="numeric-leading-zeros" suffix="."/>
 						<date-part name="year"/>
 					</date>
 				</if>
-				<else>
-					<text variable="year-suffix" font-style="italic" prefix=" " suffix=" "/>
-					<text term="no date" prefix="(" suffix=")"/><!-- Ist kein Jahr bekannt wird "(ohne Jahr)" ausgegeben (sofern zotero deutsch spricht) -->	
-				</else>
+				<!--<else>
+					<group delimiter=" | ">
+						<text term="no date" prefix="(" suffix=""/>	
+						<text variable="year-suffix" font-style="italic" prefix=" | " suffix=" "/>
+						<text value=")"/>
+					</group>
+				</else>-->
 			</choose>
 		</group>
 	</macro>
+	<locale xml:lang="de-DE" version="1.0" xmlns="http://purl.org/net/xbiblio/csl">
+	  <style-options punctuation-in-quote="true"/>
+	  <date form="text">
+	    <date-part name="day" suffix=". "/>	    	    
+	    <date-part name="month" suffix=" "/>
+	    <date-part name="year"/>
+	  </date>
+	  <date form="numeric">
+	    <date-part name="day" suffix="." range-delimiter="-"/>
+	    <date-part name="month" form="numeric" suffix="." range-delimiter="-"/>
+   	    <date-part name="year" range-delimiter="-"/>
+	  </date>
+	  <terms>
+	    <term name="no date">o.J.</term>
+	    <term name="et-al">et al.</term>
+	    <term name="page">
+	      <single>Seite</single>
+	      <multiple>Seiten</multiple>
+	    </term>
+	    <term name="page" form="short">
+	      <single>S.</single>
+	      <multiple>S.</multiple>
+	    </term>
+	  </terms>
+	</locale>
+	
 <!-- Ende Erstellung Bibliographie -->
 <!-- Univerelle Makros --><macro name="sort-key"><!-- Literaturverzeichnis wird sortiert nach 1. Erstem Autor, 2. Jahr der Veröffentlichung, 3.Titel der Veröffentlichung-->
 		<text macro="contributors-sort" suffix=" "/>

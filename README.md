@@ -18,6 +18,9 @@ Seit Version 0.7 sollte die Version CSL-1.0-kompatibel sein.
 
 ## Changelog
 
+### Version 0.8.1
+* minor enhancements for films and webpages.
+
 ### Version 0.8
 * adjustments for better matching the "Leitfaden"
 

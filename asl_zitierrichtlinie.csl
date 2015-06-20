@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="de-DE" demote-non-dropping-particle="sort-only">
 	<info>
-		<title>Zitierrichtlinie asl Version 0.8.1</title>
+		<title>Zitierrichtlinie asl Version 0.8.2</title>
 		<id>https://github.com/jannefleischer/zitierrichtlinie_asl</id>
 	    <link href="https://github.com/jannefleischer/zitierrichtlinie_asl" rel="self"/>
 		<author>
@@ -15,7 +15,7 @@
 		<rights>This work is licensed under the MIT license</rights>
 	</info>
 <!-- Ausgabe der Zitierung im Text -->
-	<citation disambiguate-add-names="true" disambiguate-add-year-suffix="true" et-al-min="3" et-al-use-first="1" et-al-subsequent-min="4" et-al-subsequent-use-first="1" >
+	<citation disambiguate-add-names="true" disambiguate-add-year-suffix="false" et-al-min="3" et-al-use-first="1" et-al-subsequent-min="4" et-al-subsequent-use-first="1" >
 		<!-- Mehr als zwei Autoren: et al. wird verwendet -->
 		<!-- Nur der erste Autor wird dabei angegeben -->
 		<!-- Für Sammelbände: 4 Herausgeber werden angegeben (wird nur im Literaturverzeichnis angegeben) -->
@@ -26,31 +26,16 @@
 			<choose>
 				<if position="ibid-with-locator">
 					<group delimiter=", ">
-						<text term="ibid" text-case="capitalize-first" suffix="."/>
+						<text term="ibid" text-case="" suffix=""/>
 						<text macro="point-locators-subsequent"/>
 					</group>
 				</if>
 				<else-if position="ibid">
-					<text term="ibid" text-case="capitalize-first" suffix="."/>
+					<text term="ibid" suffix=""/>
 				</else-if>
 				<else>
-					<!--<choose>
-						<if type="webpage post-weblog post" match="any">
-							<text macro="contributors-short" suffix=": "/>
-							<text macro="title" />
-						</if>
-						<else>-->
-							<text macro="contributors-short"/>
-							<text macro="issued_cite"/>
-							<!--<if variable="issued" match="any">
-								<date variable="issued" prefix=" ">
-									<date-part name="year"/>
-								</date>
-							</if>
-							<else>
-							</else>
-						</else>
-					</choose>-->
+					<text macro="contributors-short"/>
+					<text macro="issued_cite"/>
 					<text macro="point-locators-subsequent"/>
 				</else>
 			</choose>
@@ -83,10 +68,11 @@
 				<date variable="issued">
 					<date-part name="year" prefix=" "/><!-- Wenn ein Veröffentlichungszeitpunkt bekannt ist wird das Jahr ausgegeben. -->
 				</date>
-				<text variable="year-suffix" font-style="italic"/><!-- Hat ein Autor mehrere Veröffentlichungen in einem Jahr gemacht, wird ein eindeutiger Buchstabe angehängt -->
+			<!--	<text variable="year-suffix" font-style="italic"/>-->
+				<!-- Hat ein Autor mehrere Veröffentlichungen in einem Jahr gemacht, wird ein eindeutiger Buchstabe angehängt -->
 			</if>
 			<else>
-				<text variable="year-suffix" font-style="italic" prefix=" " suffix=" "/>
+				<!--<text variable="year-suffix" font-style="italic" prefix=" " suffix=" "/>-->
 				<text term="no date" prefix="(" suffix=")"/><!-- Ist kein Jahr bekannt wird "(ohne Jahr)" ausgegeben (sofern zotero deutsch spricht) -->
 				
 			</else>
@@ -151,7 +137,7 @@
 		<choose>
 			<if variable="author editor publisher" match="any">
 				<names variable="author" font-weight="bold">
-					<name name-as-sort-order="all" and="symbol" sort-separator=", " delimiter=" / " delimiter-precedes-last="always"/><!-- Nachname wird ausgegeben. Bei Zwei Autoren mit dazwischenliegendem Schrägstrich -->
+					<name name-as-sort-order="first" sort-separator=", " delimiter=" / " delimiter-precedes-last="always"/><!-- Nachname wird ausgegeben. Bei Zwei Autoren mit dazwischenliegendem Schrägstrich -->
 					<substitute>
 						<text macro="editor"/>
 						<text macro="publisher"/>
@@ -180,19 +166,19 @@
 					<date-part name="month" suffix="."/>
 					<date-part name="year"/>
 				</date>
-				<text variable="year-suffix" prefix=" | " suffix=" "/>
+				<!--<text variable="year-suffix" prefix=" | " suffix=" "/>-->
 				<text value=")"/>
 			</if>
 			<else-if variable="issued">
 				<date variable="issued">
 					<date-part name="year" prefix="("/><!-- Wenn ein Veröffentlichungszeitpunkt bekannt ist wird das Jahr in Klammern angegeben. -->
 				</date>
-				<text variable="year-suffix" />
+				<!--<text variable="year-suffix" />-->
 				<text value=")"/>
 			</else-if>
 			<else>
 				<text term="no date" prefix="(" suffix=""/><!-- Ist kein Jahr bekannt wird "(ohne Jahr)" ausgegeben (sofern zotero deutsch spricht) -->
-				<text variable="year-suffix" prefix=" | " suffix=" "/>
+				<!--<text variable="year-suffix" prefix=" | " suffix=" "/>-->
 				<text value=")"/>
 			</else>
 		</choose>
@@ -232,19 +218,22 @@
 			<if type="chapter"><!-- Quelle ist nur ein Kapitel -->
 				<group delimiter="">
 					<choose>
-						<if variable="author"><!-- Autor bekannt -->
-							<names variable="editor" delimiter=""><!-- Herausgeber ausgeben -->
-								<name name-as-sort-order="all" and="symbol" delimiter="[Hrsg.], " delimiter-precedes-last="never" suffix="[Hrsg.]: "/>
+						<if variable="collection-editor" match="any"><!-- Autor bekannt -->
+							<names variable="collection-editor" delimiter=""><!-- Herausgeber ausgeben -->
+								<name name-as-sort-order="all" and="symbol" delimiter=" [Hrsg.], " delimiter-precedes-last="never" suffix=" [Hrsg.]: "/>
 							</names>
 						</if>
-					</choose>
-					<choose>
-						<if variable="author editor" match="any"><!-- Autor oder Herausgeber bekannt -->
-							<names variable="translator" delimiter=""><!-- Übersetzer auch ausgeben -->
-								<!-- <label form="verb" text-case="lowercase"  /> -->
-								<name name-as-sort-order="all" and="symbol" delimiter=", " delimiter-precedes-last="never" suffix="[Übers.]"/>
+						<else-if variable="container-author" match="any"><!-- Editor bekannt -->
+							<names variable="container-author" delimiter="" suffix=" [Hrsg.]: "><!-- Herausgeber ausgeben -->
+								<name name-as-sort-order="all" and="symbol" delimiter=" [Hrsg.] / " delimiter-precedes-last="always" />
 							</names>
-						</if>
+						</else-if>
+						<else>
+							<names variable="editor" suffix=" [Hrsg.]: ">
+								<name name-as-sort-order="first" and="" delimiter=" [Hrsg.] / " delimiter-precedes-last="always">
+								</name>
+							</names>
+						</else>
 					</choose>
 				</group>
 			</if>
@@ -295,8 +284,8 @@
 						<if variable="author editor" match="any"><!-- Autor oder Herausgeber bekannt -->
 							
 							<names variable="translator" delimiter=". "><!-- Gib den Übersetzer aus -->
-								<label form="verb" text-case="capitalize-first" suffix="[Uebers.]"/>
-								<name and="text" delimiter=", "/>
+								<label form="verb" text-case="capitalize-first" suffix=" "/>
+								<name and="text" delimiter=", " suffy=". "/>
 							</names>
 						</if>
 					</choose>
@@ -497,7 +486,7 @@
 				<date variable="issued">
 					<date-part name="year" prefix="("/><!-- Wenn ein Veröffentlichungszeitpunkt bekannt ist wird das Jahr in Klammern angegeben. -->
 				</date>
-				<text variable="year-suffix" font-style="italic"/>
+				<!--<text variable="year-suffix" font-style="italic"/>-->
 				<text value=")"/>
 			</if>
 			<else>
@@ -606,6 +595,7 @@
 	      <single>S.</single>
 	      <multiple>S.</multiple>
 	    </term>
+	    <term name="editor" form="long">[Hrsg.]</term>
 	  </terms>
 	</locale>
 	

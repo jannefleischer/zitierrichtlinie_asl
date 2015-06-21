@@ -18,8 +18,11 @@ Seit Version 0.7 sollte die Version CSL-1.0-kompatibel sein.
 
 ## Changelog
 
+### Version 0.8.2.1
+* minor fix regarding issue #1
+
 ### Version 0.8.2
-* fixed issue #2 und #3
+* fixed issues #2 und #3
 
 ### Version 0.8.1
 * minor enhancements for films and webpages.

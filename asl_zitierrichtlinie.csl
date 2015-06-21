@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="de-DE" demote-non-dropping-particle="sort-only">
 	<info>
-		<title>Zitierrichtlinie asl Version 0.8.2</title>
+		<title>Zitierrichtlinie asl Version 0.8.2.1</title>
 		<id>https://github.com/jannefleischer/zitierrichtlinie_asl</id>
 	    <link href="https://github.com/jannefleischer/zitierrichtlinie_asl" rel="self"/>
 		<author>
@@ -15,7 +15,7 @@
 		<rights>This work is licensed under the MIT license</rights>
 	</info>
 <!-- Ausgabe der Zitierung im Text -->
-	<citation disambiguate-add-names="true" disambiguate-add-year-suffix="false" et-al-min="3" et-al-use-first="1" et-al-subsequent-min="4" et-al-subsequent-use-first="1" >
+	<citation disambiguate-add-names="true" disambiguate-add-year-suffix="true" et-al-min="3" et-al-use-first="1" et-al-subsequent-min="4" et-al-subsequent-use-first="1" >
 		<!-- Mehr als zwei Autoren: et al. wird verwendet -->
 		<!-- Nur der erste Autor wird dabei angegeben -->
 		<!-- Für Sammelbände: 4 Herausgeber werden angegeben (wird nur im Literaturverzeichnis angegeben) -->

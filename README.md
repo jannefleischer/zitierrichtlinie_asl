@@ -7,16 +7,18 @@ This is the repository for a Citation Style Language File for the University of 
 ### german
 Ziel dieses Projekt ist es eine CSL-Datei (Citation Style Language) zu erstellen, die den "Leitfaden zum wissenschaftlichen Arbeiten" der am Fachbereich 6 asl der Universität Kassel als Zitierrichtlinie dient, so gut wie möglich umsetzt.
 
-Die Datei asl_zitierrichtlinie.csl ist ursprünglich für meiner Diplomarbeit bis in Version 0.7 entwickelt worden. Damals noch unter einer Creative Commons Share Alike-Lizenz. Ursprünglicher Host war: 
-> https://www.assembla.com/spaces/zitierrichtlinie-asl/trac_subversion_tool. 
+Die Datei asl_zitierrichtlinie.csl ist ursprünglich für meiner Diplomarbeit bis in Version 0.7 entwickelt worden. Damals noch unter einer Creative Commons Share Alike-Lizenz.
 
-Mit der Veröffentlichung auf Github wurde die Lizenz von Creative Commons auf eine MIT geändert. 
+Mit der Veröffentlichung auf Github wurde die Lizenz von Creative Commons auf eine MIT Lizenz geändert. 
 
 Seit Version 0.7 sollte die Version CSL-1.0-kompatibel sein.
 
 > https://www.uni-kassel.de/fb06/uploads/media/FB06_2005_Leitfaden_wissenschaftliches_Arbeiten.pdf
 
 ## Changelog
+
+### Version 0.8.2.2
+* get rid of the point after ebd - if you like it, stay with Version 0.8.2.2
 
 ### Version 0.8.2.1
 * minor fix regarding issue #1

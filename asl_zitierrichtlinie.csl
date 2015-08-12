@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text" default-locale="de-DE" demote-non-dropping-particle="sort-only">
 	<info>
-		<title>Zitierrichtlinie asl Version 0.8.2.1</title>
+		<title>Zitierrichtlinie asl Version 0.8.2.2</title>
 		<id>https://github.com/jannefleischer/zitierrichtlinie_asl</id>
 	    <link href="https://github.com/jannefleischer/zitierrichtlinie_asl" rel="self"/>
 		<author>
@@ -26,7 +26,7 @@
 			<choose>
 				<if position="ibid-with-locator">
 					<group delimiter=", ">
-						<text term="ibid" text-case="" suffix=""/>
+						<text term="ibid" text-case="" suffix=":"/>
 						<text macro="point-locators-subsequent"/>
 					</group>
 				</if>
@@ -406,21 +406,6 @@
 		<text variable="collection-title" prefix="erschienen in der Reihe: ‚" suffix="‘"/><!-- Titel eines Sammelbandes -->
 		<text variable="collection-number" prefix="Nr. "/><!-- Band des Sammelbandes -->
 	</macro>
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<macro name="locators">
 		<choose>
 			<if type="article-journal"><!-- Es ist ein Artikel aus einer Zeitschrift -->
@@ -596,6 +581,7 @@
 	      <multiple>S.</multiple>
 	    </term>
 	    <term name="editor" form="long">[Hrsg.]</term>
+	    <term name="ibid">ebd</term>
 	  </terms>
 	</locale>
 	

@@ -17,8 +17,11 @@ Seit Version 0.7 sollte die Version CSL-1.0-kompatibel sein.
 
 ## Changelog
 
+### Version 0.8.2.3
+* the point is back!
+
 ### Version 0.8.2.2
-* get rid of the point after ebd - if you like it, stay with Version 0.8.2.2
+* get rid of the point after ebd - if you like it, stay with Version 0.8.2.1
 
 ### Version 0.8.2.1
 * minor fix regarding issue #1
